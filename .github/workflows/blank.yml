@@ -1,1 +1,25 @@
-
+name: 🚀 Deploy website on push
+ 
+on:
+  push:
+    branches:
+      - main
+ 
+jobs:
+  web-deploy:
+    name: 🎉 Deploy website
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+ 
+      - name: 📤 Deploy via SFTP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          source: "./*"
+          target: "/home/s2276375-php/htdocs/s2276375.ncgrp.xyz/WKL200"
